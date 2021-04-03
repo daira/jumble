@@ -11,7 +11,7 @@ def G(i, m, ellR):
     return b''.join([blake2b(person=b"UA_F4Jumble_G_" + bytes([i, j]), data=m).digest() for j in range((ellR+ellH-1)//ellH)])[:ellR]
 
 def H(i, m, ellL):
-    return blake2b(person=b"UA_F4Jumble_G_" + bytes([i]), data=m, digest_size=ellL).digest()
+    return blake2b(person=b"UA_F4Jumble_H_" + bytes([i, 0]), data=m, digest_size=ellL).digest()
 
 def f4jumble(M):
     ellM = len(M)
@@ -43,7 +43,8 @@ def f4unjumble(M):
 
 
 tv = b"From each according to their ability, to each according to their needs!"
-tvout = "ee60bc57d54f94f748d66786c4d8e4ee337839556a5d144143cabf05a1ceb63d5a122df7d53908abee0f0fe6ee1796f8edb3a2cd15211b3c655bcdeadccf4370288740c439e4d0"
+tvout = "eafec69127bcc29af38edee03629758e671c32edeb09ce3c12b7151be771a8a7cdb3550a0138548e8d32541d7ee46d4960595b38c4249a01f2b051f7e67a5446ac0e5dedbd31d9"
 
+#print(f4jumble(tv).hex())
 assert f4jumble(tv).hex() == tvout
 assert f4unjumble(f4jumble(tv)) == tv
